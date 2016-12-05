@@ -18,7 +18,7 @@ class FooRoute extends route_1.BaseRoute {
         let options = {
             'message': 'hello from the foo page'
         };
-        this.render(req, res, 'index', options);
+        this.render(req, res, 'head', options);
     }
 }
 exports.FooRoute = FooRoute;

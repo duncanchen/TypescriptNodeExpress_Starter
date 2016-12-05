@@ -5,8 +5,8 @@ import * as logger from "morgan";
 import * as path from "path";
 import errorHandler = require('errorhandler');
 import methodOverride = require('method-override');
-import {IndexRoute} from "./routes/index";
-import {FooRoute} from './routes/fooRoute';
+import { IndexRoute } from "./routes/index";
+import { FooRoute } from './routes/fooRoute';
 
 /* 
 * the server.
@@ -15,7 +15,7 @@ import {FooRoute} from './routes/fooRoute';
 * @class server
 */
 
-export class Server{
+export class Server {
     public app: express.Application;
 
     /**
@@ -27,9 +27,9 @@ export class Server{
      * @return {ng.auto InjectorService} Return the newly created injector for this app.
      */
 
-    public static bootstrap(): Server{
+    public static bootstrap(): Server {
         return new Server();
-    } 
+    }
 
     /**
      * Constructor.
@@ -37,7 +37,7 @@ export class Server{
      * @class Server
      * @constructor
      */
-    constructor(){
+    constructor() {
         this.app = express();
 
         this.config();
@@ -53,7 +53,7 @@ export class Server{
      * @class Server
      * @method api
      */
-    public api(){
+    public api() {
         // leave empty for now.
     }
 
@@ -65,12 +65,12 @@ export class Server{
      * @class Server
      * @method config
      */
-    public config(){
-        this.app.use(express.static(path.join(__dirname,"public")));
+    public config() {
+        this.app.use(express.static(path.join(__dirname, "public")));
 
         //config pug
-        this.app.set("views", path.join(__dirname,"views"));
-        this.app.set("view engine","pug");
+        this.app.set("views", path.join(__dirname, "views"));
+        this.app.set("view engine", "pug");
 
         //use logger middleware
         this.app.use(logger("dev"));
@@ -78,35 +78,37 @@ export class Server{
         this.app.use(bodyParser.json());
 
         this.app.use(bodyParser.urlencoded({
-            extended:true
+            extended: true
         }));
 
         this.app.use(cookieParser('MY_SECRET_HERE'));
 
         this.app.use(methodOverride());
 
-        this.app.use(function(err:any, req:express.Request, res: express.Response,
-        next: express.NextFunction){
-            err.staus =404;
+        this.app.use(function (err: any, req: express.Request, res: express.Response,
+            next: express.NextFunction) {
+            err.staus = 404;
             next(err);
         });
 
         this.app.use(errorHandler());
     }
 
-        /**
-     * Create router
-     * 
-     * @class Server
-     * @method routes
-     * @return void
-     */
-    public routes(){
+    /**
+ * Create router
+ * 
+ * @class Server
+ * @method routes
+ * @return void
+ */
+    public routes() {
         let router: express.Router;
-        router= express.Router();
+        router = express.Router();
 
+        // routes go here
         //IndexRoute
         IndexRoute.create(router);
+        //create the fooRoute
         FooRoute.create(router);
 
 
